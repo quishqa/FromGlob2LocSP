@@ -3,13 +3,17 @@
 """
 Created on Thu Sep  3 12:18:19 2020
 
+This script creates the input to PyChEmiss
+based on vehicular emissions spatially disaggregated
+by steet length.
+
 @author: mgavidia
 """
 
 import pandas as pd
 import numpy as np
 
-osm_output = pd.read_csv('s9_test3.txt', 
+osm_output = pd.read_csv('s3_test2.txt', 
                          names=['id', 'x', 'y', 'lonkm', 'mainkm', 'urban'],
                          delim_whitespace=True)
 
@@ -18,7 +22,6 @@ osm = osm_output[['id', 'x', 'y', 'lonkm']].copy()
 
 
 total_vehicles = 49365478 # calculated in all domain
-# total_vehicles = 15271694 # In SP
 
 # From CETESB report
 # E_CO_year = 417.026 # kTn/year
@@ -34,18 +37,16 @@ total_vehicles = 49365478 # calculated in all domain
 # E_SO2_year = 4.23  # KTn/year
 # E_PM_year = 1.54   # kTn/year
 
-# Einyel totals
 E_CO_year = 6837.5 * 0.55# kTn/year
 E_HC_year = 2851.65 * 0.30  # kTn/year
 E_NOX_year = 1134.08 * 0.30 # KTn/year
 E_SO2_year = 72.3604 * 0.30 # KTn/year
 E_PM_year = 144.312 # * 0.35 # kTn/year
 
-cell_area = 81.0 # km2
-
-
 E_NO_year = E_NOX_year * 0.9
 E_NO2_year = E_NOX_year * 0.1
+
+cell_area = 81.0 # km2
 
 hrsplt_co = [0.019, 0.012, 0.008, 0.004, 0.003, 0.003,
              0.006, 0.017, 0.047, 0.074, 0.072, 0.064,
@@ -74,16 +75,18 @@ MW = [64.00, 30.00, 44.05, 30.09, 122.12, 17.00, 42.66, 60.00,
       1., 1., 1., 1., 1., 1., 
       1., 1., 1.]
 
+# Dataframe with species and their molecular weight
 CBMZ = pd.DataFrame({'emi_spe': emitted_species,
                      'mw': MW})
 
+# VOC fractions from air quality forecast file
 voc_split = pd.read_csv("./voc_frac.csv",
                         names=['emi_spe', 'tot', 'frac', 'frac_round', 'per'])
 voc_split = voc_split.merge(CBMZ, on="emi_spe")
 voc_split['total_emi'] = E_HC_year * voc_split.frac.values
 
+# Getting the ratio between vehicles/road_length
 veic_per_cell = total_vehicles / osm.lonkm.sum()
-
 
 
 
@@ -176,6 +179,8 @@ for i in range(24):
     
 all_emiss_df = pd.concat(all_emiss.values(), ignore_index=True)            
         
+# Information based on
+# Andrade et al. 2015, Vara-Vela et al. 2017 
 
 # PM
 f_fina_total = 0.670   # FRACAO FINA TOTAL
@@ -243,4 +248,4 @@ def to_pychemis(df, emiss_sp, file_name):
 
 
 to_pychemis(all_emiss_df,emitted_species, 
-            "simple_model_einyel_total_d01_area_030_co_plus_pm.txt")
+            "simple_model_d01.txt")

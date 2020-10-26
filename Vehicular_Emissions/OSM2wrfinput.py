@@ -3,6 +3,9 @@
 """
 Created on Thu Aug 27 03:04:19 2020
 
+This script downloads openstreetmap street information into 
+your WRF-Chem domain.
+
 @author: mgavidia
 """
 
@@ -11,9 +14,8 @@ import xarray as xr
 import geopandas as gpd
 from shapely.geometry import Polygon
 import numpy as np
-import matplotlib.pyplot as plt
 
-geo = xr.open_dataset("geo_em.d02.nc")
+geo = xr.open_dataset("geo_em.d01.nc")
 
 # Reading WRF cell corners
 xlat_c = geo.XLAT_C.values[0, : ,:]
@@ -29,29 +31,19 @@ west = xlon_c.min()
 # Custom filter
 # Based on https://github.com/gboeing/osmnx-examples/blob/master/notebooks/08-custom-filters-infrastructure.ipynb
 
-# street_main = ['primary', 'secondary', 'tertiary', 'motorway', 'trunk']
-# street_links = [st + "_link" for st in street_main]
-# all_streets = street_main + street_links
+street_main = ['primary', 'secondary', 'tertiary', 'motorway', 'trunk']
+street_links = [st + "_link" for st in street_main]
+all_streets = street_main + street_links
 
-# cf =( '[' +'"highway"' + "~" + 
-#      '"' + "|".join(all_streets) + '"' 
-#      + ']')
+cf =( '[' +'"highway"' + "~" + 
+     '"' + "|".join(all_streets) + '"' 
+     + ']')
 
-# # Add a buffer zone of 0.2 to ensure WRF_Domain is inside
-# # traffic lines
-# SP = ox.graph_from_bbox(north + 0.2, south - 0.2, 
-#                        east + 0.2, west - 0.2,
-#                        network_type="drive",
-#                        custom_filter=cf)
-
-
-# # ox.save_graph_geopackage(SP, filepath='./data/geo_d02.gpkg') # Save as geopandas
-# ox.save_graphml(SP, filepath="./data/geo_d01.graphml") # Save as graph for OSMNx
+# ox.save_graph_geopackage(SP, filepath='./data/geo_d02.gpkg') # Save as geopandas
+ox.save_graphml(SP, filepath="./data/geo_d01.graphml") # Save as graph for OSMNx
 # ox.save_graph_shapefile(SP, filepath='./data/geo_d01') # Save as shapefile
 
-
-
-
+# Retrieving wrfinput cell corner coordinates
 lat_c = xlat_c[:, 1]
 lon_c = xlon_c[1, :]
 
@@ -76,9 +68,7 @@ grid_wrf.to_file("grid_wrf_d01.shp")
 
 # Extracting streets from SO graph file as geopandas
 SP = ox.load_graphml("./data/geo_d02.graphml")
-# sp_gpd = ox.graph_to_gdfs(sp,  nodes=False, edges=True)
 sp_gpd = ox.graph_to_gdfs(SP,  nodes=False, edges=True)
-
 
 
 # Adding CRS to grid and adding an ID columns
