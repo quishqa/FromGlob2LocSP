@@ -64,6 +64,13 @@ for j in range(len(lat_c) - 1):
 grid_wrf = gpd.GeoDataFrame({'geometry':poly})
 grid_wrf.to_file("grid_wrf_d01.shp")
 
+# Add a buffer zone of 0.2 to ensure WRF_Domain is inside
+# traffic lines
+buff = 0.0 # 0.2
+SP = ox.graph_from_bbox(north + buff, south - buff, 
+                        east + buff, west - buff,
+                        network_type="drive",
+                        custom_filter=cf)
 
 
 # Extracting streets from SO graph file as geopandas
