@@ -1,8 +1,9 @@
 # Creating wrfchemi file based on vehicular emissions
 
 We will spatially disaggregate the total vehicular emissions based on the total street length in each domain cell.
-For that, first we'll download the street information for our simulation domain using `OSM2wrfinput.py`,
-then we'll disaggregate the emissions into the domain using `VeicEmiss2PyChEmiss.py`,
+For that, first we'll download the street information for our simulation domain using `1_Download_OSM.py`,
+then we'll calculate the total road length in each cell of WRF-domain with `2_OSM2WRF.py`,
+to finally disaggregate the emissions into the domain using `VeicEmiss2PyChEmiss.py`,
 to finally build the wrfchemi netCDF file using [PyChEmiss](https://github.com/quishqa/PyChEmiss).
 
 ## Installation
@@ -16,21 +17,25 @@ conda create --name veic_emiss
 conda activate veic_emiss
 ```
 
-Then install the required packages
+Then install the required packages. You need `osmnx` to download openstreetmap data,
+and `xarray` to read and create netCDF.
 
 ```
 conda install -c conda-forge osmnx
 conda install -c conda-forge xarray dask netCDF4 bottleneck
 ```
 
+When installing `osmx`, you will also have other packages needed as `pandas`, `geopandas`, and `numpy`.
+
 ## How to run
 
-### Openstreetmap data to your domain
-First, download the openstreetmap data to your domain with `OSM2wrfinput.py`.
+### Download OSM data to your domain
+
+First, download the openstreetmap data to your domain with `1_Download_OSM.py`.
 You'll need the `geo_em.d01.nc` file.
 
 ```
-python OSM2wrfinput.py
+python 1_Download_OSM.py
 ```
 
 Depending on the size of your domain, It could take some time.
@@ -39,9 +44,18 @@ However for a domain of 100 x 150 points with &Delta;x = 9 km, it took like 5 ho
 In that case, maybe It is easier to run the script like this:
 
 ```
-nohup python OSM2wrfinput.py &
+nohup python 1_Download_OSM.py &
 ```
 
+### Calculate total length in each WRF-Chem domain cell
+
+The script `2_OSM2WRF.py`, will calculate the total road length in each cell.
+
+```
+python 2_OSM2WRF.py
+```
+
+These two step can be done by using `OSM2VeicEmiss.py`.
 
 ### Spatial and temporal disaggregation
 
