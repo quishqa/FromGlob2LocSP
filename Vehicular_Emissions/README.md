@@ -60,4 +60,4 @@ The species are detailed in `simple_model_d01.yml`, so you just need to used it 
 
 ## Acknowledgments
 
-Special thanks to LAPAT, Angel Vara-Vela and Carlos M. Gonzalez which inspired these scripts.
+Special thanks to LAPAT, Angel Vara-Vela and Carlos M. Gonzalez who inspired these scripts.
