@@ -104,7 +104,7 @@ s_df["X"] = grid_a4w.centroid.geometry.x
 s_df["Y"] = grid_a4w.centroid.geometry.y
 
 s_df[["X", "Y", "longKm", "mainKm", "urban"]].to_csv("s3_test2.txt", sep=" ", header=False)
-s_df[["X", "Y",  "longkm"]].to_csv("s3_longkm.txt", sep=" ", header=False)
-s_df[["X", "Y",  "mainkm"]].to_csv("s3_mainkm.txt", sep=" ", header=False)
+s_df[["X", "Y",  "longKm"]].to_csv("s3_longkm.txt", sep=" ", header=False)
+s_df[["X", "Y",  "mainKm"]].to_csv("s3_mainkm.txt", sep=" ", header=False)
 s_df[["X", "Y",  "urban"]].to_csv("s3_urban.txt", sep=" ", header=False)
 
