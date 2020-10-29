@@ -120,6 +120,12 @@ roads_grid_main = roads_type.dissolve("ID")
 roads_grid['longKm'] = roads_grid.geometry.to_crs("EPSG:32733").length / 1000
 roads_grid_main['mainKm'] = roads_grid_main.geometry.to_crs("EPSG:32733").length /1000
 
+
+if  roads_grid.shape[0] != roads_grid_main.shape[0]:
+     print("There were cells with only links, completing with NA")
+     roads_grid_main =  roads_grid_main.reindex(roads_grid.index)
+
+
 roads_grid['urban'] = (roads_grid_main.mainKm.values * 
                        (roads_grid.longKm.values - roads_grid_main.mainKm.values) /
                        (roads_grid_main.mainKm.values + 1))
@@ -139,8 +145,8 @@ s_df["Y"] = grid_a4w.centroid.geometry.y
 
 
 s_df[["X", "Y", "longKm", "mainKm", "urban"]].to_csv("s3_test2.txt", sep=" ", header=False)
-s_df[["X", "Y",  "longkm"]].to_csv("s3_longkm.txt", sep=" ", header=False)
-s_df[["X", "Y",  "mainkm"]].to_csv("s3_mainkm.txt", sep=" ", header=False)
+s_df[["X", "Y",  "longKm"]].to_csv("s3_longkm.txt", sep=" ", header=False)
+s_df[["X", "Y",  "mainKm"]].to_csv("s3_mainkm.txt", sep=" ", header=False)
 s_df[["X", "Y",  "urban"]].to_csv("s3_urban.txt", sep=" ", header=False)
 
 

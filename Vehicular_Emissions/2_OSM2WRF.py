@@ -84,6 +84,12 @@ roads_grid_main = roads_type.dissolve("ID")
 roads_grid['longKm'] = roads_grid.geometry.to_crs("EPSG:32733").length / 1000
 roads_grid_main['mainKm'] = roads_grid_main.geometry.to_crs("EPSG:32733").length /1000
 
+
+# In case they differ number of rows:
+if  roads_grid.shape[0] != roads_grid_main.shape[0]:
+     print("There were cells with only links, completing with NA")
+     roads_grid_main =  roads_grid_main.reindex(roads_grid.index)
+
 roads_grid['urban'] = (roads_grid_main.mainKm.values * 
                        (roads_grid.longKm.values - roads_grid_main.mainKm.values) /
                        (roads_grid_main.mainKm.values + 1))
