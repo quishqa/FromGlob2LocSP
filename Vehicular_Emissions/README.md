@@ -72,6 +72,25 @@ Finally, you will need to install [PyChEmiss](https://github.com/quishqa/PyChEmi
 The chemical speciation is based on CBMZ/MOSAIC mechanism.
 The species are detailed in `simple_model_d01.yml`, so you just need to used it as template and edit the **nx** and **ny** ans **cell_area** part.
 
+## Other scripts
+
+### Number of vehicles in Domain
+In `utils` folder, you can use `veh_in_domain.py` to calculate the number of vehicles in your domain. It requires the Installation of `geobr` packages by:
+
+```
+pip install geobr
+```
+
+More information of `geobr`, in [this link](https://github.com/ipeaGIT/geobr)
+
+### Completing anthropogenic emissions
+You can also complement your anthropogenic emissions using global inventories that separates emissions by sources, like EDGAR.
+
+First you need to create the `wrfchemi_00z_d0X`using [ANTHRO_EMISS](https://www2.acom.ucar.edu/wrf-chem/wrf-chem-tools-community) for each source.
+That is, you need a `wrfchemi_00z_d0X` for industrial emissions, other for domestic emissions, etc. Then you can add them to your previously created vehicular emissions.
+
+
+
 ## Acknowledgments
 
 Special thanks to LAPAT, Angel Vara-Vela and Carlos M. Gonzalez who inspired these scripts.
