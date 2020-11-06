@@ -62,7 +62,7 @@ These two step can be done by using `OSM2VeicEmiss.py`.
 Then, used the output from the previous step and run  `VeicEmiss2PyChEmiss.py`:
 
 ```
-python VeicEmiss2PyChEmiss.py
+python 3_VeicEmiss2PyChEmiss.py
 ```
 This step is very fast, and will create the output to run PyChEmiss.
 
