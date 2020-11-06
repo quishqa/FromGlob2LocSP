@@ -3,7 +3,7 @@ load("ibi_30years.Rda")
 library(openair)
 library(scales)
 
-# Calulating mean value from 2000
+# Calulating mean value from 2000 to 2020
 SelectFrom20DayAvg <- function(df, stats = "mean"){
   df_2000 <- selectByDate(df, year = 2000:2020)
   df_m <- timeAverage(df_2000, avg.time = "month", statistic = stats)
@@ -50,14 +50,6 @@ PlotTemporalTrend <- function(df, ylabel, col){
 }
 
 
-
-# PlotTemporalTrend(ibi_o3_30, 
-#                   expression("O"[3] * " (" * mu * "g m" ^-3 * ")"),
-#                   "blue")
-# PlotTemporalTrend(ibi_nox_30, 
-#                   expression("NO"[X] * " (ppb)"),
-#                   "green")  
-
 pdf("ibirapuera_20years.pdf", width = 14, height = 10)
 par(mfrow=c(3, 2), mar=c(2, 4.6, 1.5, 0.7), 
     oma = c(0, 0, 1, 0))
@@ -84,8 +76,8 @@ dev.off()
 
 
 
-load("~/R_tests/randroll/pin_pm10_pm25_so2.Rda")
-load("~/R_tests/randroll/pin_tol_30_year.Rda")
+load("./pin_pm10_pm25_so2.Rda")
+load("./pin_tol_30_year.Rda")
 
 pdf("pinheiros_20years.pdf", width = 14, height = 10)
 par(mfrow=c(3, 2), mar=c(2, 4.6, 1.5, 0.7), 
