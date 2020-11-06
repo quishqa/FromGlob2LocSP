@@ -10,6 +10,6 @@ and how to make the concentration trend plot Figure in Introduction section.
 
 Other useful tools:
 
-* `qualR`: An R package to download São Paulo air pollution data.
-* `PyChEmiss`: A Python emissions preprocessor for WRF-Chem regional modeling.
-* `wrf_sp_eval`: Tools to perform WRF-Chem model evaluation in São Paulo State.
+* [`qualR`](https://github.com/quishqa/qualR): An R package to download São Paulo air pollution data.
+* [`PyChEmiss`](https://github.com/quishqa/PyChEmiss): A Python emissions preprocessor for WRF-Chem regional modeling.
+* [`wrf_sp_eval`](https://github.com/quishqa/WRF-Chem_SP): Tools to perform WRF-Chem model evaluation in São Paulo State.
