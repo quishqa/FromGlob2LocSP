@@ -1,5 +1,5 @@
 # FromGlob2LocSP
-Script to reproduce figures and results of "From Global to local: A multi-scale air quality modeling study over the Metropolitan Area of São Paulo"
+Scripts to reproduce figures and results of "From Global to local: A multi-scale air quality modeling study over the Metropolitan Area of São Paulo"
 
 * [`01_Ibirapuera_20yrs_data`](https://github.com/quishqa/FromGlob2LocSP/tree/main/01_Ibirapuera_20yrs_data): Example on how to use [`qualR`](https://github.com/quishqa/qualR),
 and how to make the concentration trend plot Figure in Introduction section.
